@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moon Grow Pickle - Authentic Haryanvi Taste</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Inter font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom scrollbar for better aesthetics */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #2D3748; /* Dark gray */
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #ca8a04; /* yellow-600 */
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a16207; /* yellow-700 */
+        }
+        /* Style for the "Add to Cart" button on cards */
+        .add-to-cart-btn {
+            background-color: #ca8a04; /* yellow-600 */
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+        .add-to-cart-btn:hover {
+            background-color: #a16207; /* yellow-700 */
+        }
+        /* Custom theme colors */
+        .bg-brand-primary {
+            background-color: #0d243c; /* Dark blue from logo */
+        }
+        .text-brand-primary {
+            color: #0d243c;
+        }
+        .bg-brand-secondary {
+            background-color: #ca8a04; /* Gold/Yellow */
+        }
+        .text-brand-secondary {
+            color: #ca8a04;
+        }
+        .border-brand-secondary {
+            border-color: #ca8a04;
+        }
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Floating WhatsApp Button */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #25d366;
+            color: white;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            background-color: #1da851;
+        }
+
+        /* Hamburger Menu Icon */
+        .hamburger {
+            display: inline-block;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0;
+            z-index: 5001; /* Above overlay */
+        }
+        .hamburger-line {
+            width: 30px;
+            height: 3px;
+            background-color: #e5e7eb; /* gray-200 */
+            display: block;
+            margin: 6px 0;
+            transition: all 0.3s ease-in-out;
+        }
+        /* Hamburger animation to 'X' */
+        .hamburger.open .hamburger-line-1 {
+            transform: rotate(45deg) translate(7px, 7px);
+        }
+        .hamburger.open .hamburger-line-2 {
+            opacity: 0;
+        }
+        .hamburger.open .hamburger-line-3 {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        /* Mobile Menu Overlay */
+        #mobile-menu {
+            transition: opacity 0.3s ease-in-out;
+        }
+        #mobile-menu.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Fade In Up Animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .animate-card {
+            animation: fadeInUp 0.6s ease-out forwards;
+            opacity: 0; /* Start hidden */
+        }
+        .animate-card:nth-child(1) { animation-delay: 0.1s; }
+        .animate-card:nth-child(2) { animation-delay: 0.15s; }
+        .animate-card:nth-child(3) { animation-delay: 0.2s; }
+        .animate-card:nth-child(4) { animation-delay: 0.25s; }
+        .animate-card:nth-child(5) { animation-delay: 0.3s; }
+        .animate-card:nth-child(6) { animation-delay: 0.35s; }
+
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-300">
+
+    <!-- Header / Navigation -->
+    <header class="bg-gray-800 shadow-lg sticky top-0 z-40">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8 py-3 flex justify-between items-center">
+            <a href="#home" class="flex items-center space-x-2">
+                <!-- Using the provided logo -->
+                <img src="LOGO3.png" alt="Moon Grow Logo" class="h-16 w-16 object-contain" onerror="this.src='https://placehold.co/100x100/0d243c/FFFFFF?text=MG'">
+                <span class="text-xl sm:text-2xl font-bold text-white">Moon Grow Pickle</span>
+            </a>
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center space-x-6">
+                <a href="#home" class="text-gray-300 hover:text-brand-secondary transition-colors font-medium">Home</a>
+                <a href="#products" class="text-gray-300 hover:text-brand-secondary transition-colors font-medium">Products</a>
+                <a href="#footer" class="text-gray-300 hover:text-brand-secondary transition-colors font-medium">Contact</a>
+                <button id="search-icon" class="relative text-gray-300 hover:text-brand-secondary transition-colors font-medium text-xl">
+                    <i class="fas fa-search"></i>
+                </button>
+                <button id="cart-btn" class="relative text-gray-300 hover:text-brand-secondary transition-colors font-medium text-2xl">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span id="cart-count" class="absolute -top-2 -right-3 bg-red-500 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">0</span>
+                </button>
+            </div>
+            <!-- Mobile Menu Icons -->
+            <div class="md:hidden flex items-center space-x-4">
+                <button id="search-icon-mobile" class="relative text-gray-300 hover:text-brand-secondary transition-colors font-medium text-xl">
+                    <i class="fas fa-search"></i>
+                </button>
+                <button id="cart-btn-mobile" class="relative text-gray-300 hover:text-brand-secondary transition-colors font-medium text-2xl">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span id="cart-count-mobile" class="absolute -top-2 -right-3 bg-red-500 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">0</span>
+                </button>
+                <button id="menu-btn" class="hamburger" aria-label="Open menu">
+                    <span class="hamburger-line hamburger-line-1"></span>
+                    <span class="hamburger-line hamburger-line-2"></span>
+                    <span class="hamburger-line hamburger-line-3"></span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" class="fixed inset-0 bg-gray-900 bg-opacity-95 z-5000 flex flex-col items-center justify-center space-y-8 hidden">
+        <a href="#home" class="text-gray-200 hover:text-brand-secondary text-3xl font-bold mobile-menu-link">Home</a>
+        <a href="#products" class="text-gray-200 hover:text-brand-secondary text-3xl font-bold mobile-menu-link">Products</a>
+        <a href="#footer" class="text-gray-200 hover:text-brand-secondary text-3xl font-bold mobile-menu-link">Contact</a>
+    </div>
+
+    <!-- Search Bar -->
+    <div id="search-bar-container" class="bg-gray-700 p-4 sticky top-[80px] z-30 hidden shadow-lg">
+        <div class="container mx-auto relative">
+            <input type="text" id="search-input" placeholder="Search for pickles (e.g., Mango, आम)..." class="w-full bg-gray-800 text-white border border-gray-600 rounded-lg p-3 pl-10 focus:border-brand-secondary focus:ring-brand-secondary outline-none">
+            <i class="fas fa-search text-gray-400 absolute left-4 top-1/2 -translate-y-1/2"></i>
+            <button id="close-search-btn" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white text-2xl">&times;</button>
+        </div>
+    </div>
+
+
+    <!-- Main Content -->
+    <main>
+        <!-- Home Section -->
+        <section id="home" class="bg-brand-primary text-white pt-16 pb-20 md:pt-24 md:pb-32">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center">
+                <img src="LOGO3.png" alt="Moon Grow Logo" class="h-40 w-40 md:h-56 md:w-56 object-contain mb-6" onerror="this.src='https://placehold.co/200x200/ca8a04/0d243c?text=Moon+Grow'">
+                <h1 class="text-3xl md:text-5xl font-bold mb-4">Moon Grow Pickle</h1>
+                <p class="text-lg md:text-2xl text-gray-300 mb-8 max-w-2xl">
+                    Authentic Haryanvi Desi Taste.
+                </p>
+                <p class="text-base md:text-lg text-gray-400 mb-10 max-w-3xl">
+                    Discover our 80+ varieties of homemade pure Indian pickles, jams, chutneys, and natural products. All made with traditional recipes and the freshest ingredients.
+                </p>
+                <a href="#products" class="bg-brand-secondary text-white px-8 py-3 rounded-lg shadow-lg text-lg font-bold hover:bg-yellow-700 transition-colors">
+                    Browse Our Products
+                </a>
+            </div>
+        </section>
+
+        <!-- Products Section -->
+        <section id="products" class="py-16 md:py-24 bg-gray-900">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-wrap justify-between items-end mb-8 gap-4">
+                    <h2 class="text-3xl md:text-4xl font-bold text-brand-secondary">Our Menu</h2>
+                </div>
+
+                <!-- Category Filters -->
+                <div class="flex flex-wrap justify-center gap-2 md:gap-4 mb-12" id="category-filters">
+                    <!-- Filters generated dynamically -->
+                </div>
+
+                <!-- Product Grid -->
+                <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
+                    <!-- Product cards will be dynamically inserted here by JavaScript -->
+                    <p class="text-center col-span-full text-gray-400">Loading products...</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/919467554441" class="whatsapp-float" target="_blank" aria-label="Order via WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Footer -->
+    <footer id="footer" class="bg-brand-primary text-gray-300 pt-16 pb-8">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+                <!-- About -->
+                <div>
+                    <h4 class="font-bold text-white text-lg mb-4">Moon Grow Pickle</h4>
+                    <p class="text-sm">
+                        Bringing you the authentic Haryanvi desi taste with our 100% homemade and natural products. Order online and get it shipped to your doorstep.
+                    </p>
+                </div>
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="font-bold text-white text-lg mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#home" class="hover:text-white">Home</a></li>
+                        <li><a href="#products" class="hover:text-white">Products</a></li>
+                    </ul>
+                </div>
+                <!-- Contact Us & Social Media -->
+                <div>
+                    <h4 class="font-bold text-white text-lg mb-4">Contact & Social</h4>
+                    <p class="text-sm mb-2">Get in touch or follow us:</p>
+                    <a href="https://wa.me/9467554441" target="_blank" class="block font-semibold text-white text-base hover:text-brand-secondary">
+                        +91-9467554441
+                    </a>
+                    <a href="tel:+917988827652" class="block font-semibold text-white text-base hover:text-brand-secondary">
+                        +91-7988827652
+                    </a>
+                    <p class="text-sm mt-4">
+                        <strong>Address:</strong> V.P.O Kheri Barki near bus stand ( Naresh achar murabba), District hissar, Block Barwala,pincode 125001 (Haryana)
+                    </p>
+                    <div class="flex justify-center md:justify-start space-x-4 mt-6">
+                        <a href="https://www.instagram.com/moon_grow_pickles?igsh=ZWw3bTRnZzY4dWcw" target="_blank" class="text-white hover:text-brand-secondary text-2xl transition-colors" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://www.facebook.com/yourprofile" target="_blank" class="text-white hover:text-brand-secondary text-2xl transition-colors" aria-label="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://twitter.com/yourprofile" target="_blank" class="text-white hover:text-brand-secondary text-2xl transition-colors" aria-label="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-6 text-center text-sm">
+                <p>&copy; <span id="current-year"></span> Moon Grow Pickle. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cart Modal -->
+    <div id="cart-modal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50 hidden transition-opacity duration-300">
+        <!-- Added max-h-[90vh] and overflow-y-auto for scrolling -->
+        <div class="bg-gray-800 rounded-xl w-full max-w-lg max-h-[90vh] flex flex-col shadow-2xl transform transition-all scale-95 opacity-0" id="cart-modal-content">
+            
+            <!-- Fixed Header -->
+            <div class="flex justify-between items-center p-6 md:p-8 pb-4 sticky top-0 bg-gray-800 z-10 border-b border-gray-700">
+                <h3 class="text-2xl font-bold text-brand-secondary">Your Cart & Order</h3>
+                <button id="close-cart-modal-btn" class="text-gray-400 hover:text-white text-3xl">&times;</button>
+            </div>
+            
+            <!-- Scrollable Content -->
+            <div class="p-6 md:p-8 pt-4 overflow-y-auto">
+                
+                <!-- Cart Items List -->
+                <div id="cart-items-list" class="space-y-4 mb-4">
+                    <p class="text-gray-400">Your cart is empty.</p>
+                </div>
+
+                <!-- Cart Total -->
+                <div id="cart-total-price" class="mb-6 font-bold text-right text-xl text-brand-secondary">
+                    <!-- Total price will be inserted here -->
+                </div>
+                
+                <hr class="my-6 border-gray-600">
+                
+                <!-- Order Form -->
+                <form id="order-form" class="space-y-4">
+                    <!-- Customer Details (Editable) -->
+                    <div>
+                        <label for="customer-name" class="block text-sm font-medium text-gray-200">Your Name <span class="text-red-500">*</span></label>
+                        <input type="text" id="customer-name" placeholder="Enter your full name" class="mt-1 block w-full bg-gray-700 border-gray-600 text-white rounded-lg shadow-sm p-3 focus:border-brand-secondary focus:ring focus:ring-brand-secondary focus:ring-opacity-50" required>
+                    </div>
+                    
+                    <div>
+                        <label for="customer-address" class="block text-sm font-medium text-gray-200">Delivery Address <span class="text-red-500">*</span></label>
+                        <textarea id="customer-address" rows="3" placeholder="Enter your complete shipping address" class="mt-1 block w-full bg-gray-700 border-gray-600 text-white rounded-lg shadow-sm p-3 focus:border-brand-secondary focus:ring focus:ring-brand-secondary focus:ring-opacity-50" required></textarea>
+                    </div>
+
+                    <div>
+                        <label for="customer-whatsapp" class="block text-sm font-medium text-gray-200">Your WhatsApp Number <span class="text-red-500">*</span></label>
+                        <input type="tel" id="customer-whatsapp" placeholder="Enter your 10-digit WhatsApp number" class="mt-1 block w-full bg-gray-700 border-gray-600 text-white rounded-lg shadow-sm p-3 focus:border-brand-secondary focus:ring focus:ring-brand-secondary focus:ring-opacity-50" required>
+                    </div>
+                    
+                    <!-- Form Error Message -->
+                    <p id="form-error-msg" class="text-red-600 text-sm hidden">Please fill out all required fields. Your cart also cannot be empty.</p>
+
+                    <!-- Submit Button -->
+                    <button type="submit" id="send-whatsapp-btn" class="w-full flex justify-center items-center bg-green-500 text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:bg-green-600 transition-colors text-lg mb-4">
+                        <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.5 3.4A12.1 12.1 0 0012 0 12 12 0 001.7 17.8L0 24l6.2-1.6A12 12 0 0012 24a12 12 0 0012-12 12 12 0 00-3.5-8.6zM12 21.8c-1.9 0-3.7-.6-5.3-1.6l-.4-.2-3.9 1 1-3.8-.2-.4a9.9 9.9 0 01-1.6-5.3A9.9 9.9 0 0112 2.1c2.6 0 5.1 1 7 2.9a9.9 9.9 0 012.9 7 9.9 9.9 0 01-10 9.8zM17.3 14c-.2-.1-1.2-.6-1.4-.7-.2-.1-.4-.1-.6.1s-.5.6-.6.7c-.1.1-.3.2-.4.1-.2-.1-.8-.3-1.6-1-.6-.5-1-1.1-1.1-1.3-.1-.2 0-.3.1-.4.1-.1.2-.2.3-.3.1-.1.2-.2.2-.4.1-.1.1-.3 0-.4-.1-.1-.6-1.4-.8-1.9-.2-.5-.4-.4-.5-.4h-.5c-.1 0-.3.1-.4.2-.1.1-.5.5-.5 1.2s.5 1.4.6 1.5c.1.1 1 1.6 2.4 2.2.3.2.6.3.8.4.3.1.5.1.7.1.2 0 .5-.2.7-.4.2-.2.5-1 .6-1.2.1-.2.1-.3 0-.4z"></path></svg>
+                        Send Order via WhatsApp
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" class="fixed top-5 right-5 bg-green-500 text-white px-6 py-3 rounded shadow-lg hidden z-50">Action Successful!</div>
+
+    <!-- Static JavaScript (No Firebase) -->
+    <script>
+        // Manually added products list (Replaces database)
+        const products = [
+            // --- Pickles (Item02) ---
+            { id: 1, name: "Tind (Ker) Fine Pickle", nameHindi: "टिंड (केर) बारीक अचार", category: "Pickles", prices: {'1kg': 400, '500g': 200}, image: "tindpickle.png" },
+            { id: 2, name: "Garlic Sweet Pickle", nameHindi: "लहसुन मीठा अचार", category: "Pickles", prices: {'1kg': 400, '500g': 200}, image: "https://drive.google.com/file/d/1wz3Y9_GgQkwc_Rr5MrDbzlQCAjF33m7u/view?usp=sharing" },
+            { id: 3, name: "Mushroom Pickle", nameHindi: "मशरूम अचार", category: "Pickles", prices: {'1kg': 400, '500g': 200}, image: "https://placehold.co/400x300/ca8a04/0d243c?text=Mushroom" },
+            { id: 4, name: "Kachari Pickle", nameHindi: "कचरी अचार", category: "Pickles", prices: {'1kg': 400, '500g': 200}, image: "https://placehold.co/400x300/ca8a04/0d243c?text=Kachari" },
+            { id: 5, name: "White Tind Pickle", nameHindi: "सफेद टिंड अचार", category: "Pickles", prices: {'1kg': 400, '500g': 200}, image: "https://placehold.co/400x300/ca8a04/0d243c?text=White+Tind" },
+            { id: 6, name: "Mix Pickle", nameHindi: "मिक्स अचार", category: "Pickles", prices: {'1kg': 200, '500g': 100}, image: "mixpic.png" },
+            { id: 7, name: "Mango Pickle", nameHindi: "आम का अचार", category: "Pickles", prices: {'1kg': 200, '500g': 100}, image: "mangopickle.png" },
+            { id: 8, name: "Green Chilli Pickle", nameHindi: "हरी मिर्च अचार", category: "Pickles", prices: {'1kg': 100, '500g': 50}, image: "greenchill.png" },
+            { id: 9, name: "Hot Chilli Pickle", nameHindi: "तेज मिर्च अचार", category: "Pickles", prices: {'1kg': 200, '500g': 100}, image: "https://placehold.co/400x300/ca8a04/0d243c?text=Hot+Chilli" },
+            { id: 10, name: "Red Chilli Patti", nameHindi: "लाल मिर्च पट्टी अचार", category: "Pickles", prices: {'1kg': 200, '500g': 100}, image: "https://placehold.co/400x300/ca8a04/0d243c?text=Red+Patti" },
+            { id: 11, name: "Spicy Green Chilli", nameHindi: "तीखी हरी मिर्च अचार", category: "Pickles", prices: {'1kg': 200, '500g': 100}, image: "https://placehold.co/400x300/ca8a04/0d243c?text=Spicy+Green" },
+            { id: 12, name: "Lemon Pickle", nameHindi: "नींबू अचार", category: "Pickles", prices: {'1kg': 200, '500g': 100}, image: "https://placehold.co/400x300/ca8a04/0d243c?text=Lemon" },
+            { id: 13, name: "Bitter Gourd Pickle", nameHindi: "करेला अचार", category: "Pickles", prices: {'1kg': 200, '500g': 100}, image: "https://placehold.co/400x300/ca8a04/0d243c?text=Bitter+Gourd" },
+            { id: 14, name: "Carrot Pickle", nameHindi: "गाजर अचार", category: "Pickles", prices: {'1kg': 200, '500g': 100}, image: "https://placehold.co/400x300/ca8a04/0d243c?text=Carrot" },
+            { id: 15, name: "Turnip Pickle", nameHindi: "शलगम अचार", category: "Pickles", prices: {'1kg': 200, '500g': 100}, image: "https://placehold.co/400x300/ca8a04/0d243c?text=Turnip" },
+            { id: 16, name: "Radish Turnip Pickle", nameHindi: "मूली सलगम अचार", category: "Pickles", prices: {'1kg': 200, '500g': 100}, image: "https://placehold.co/400x300/ca8a04/0d243c?text=Radish+Turnip" },
+            { id: 17, name: "Deth Pickle", nameHindi: "डेठ अचार", category: "Pickles", prices: {'1kg': 200, '500g': 100}, image: "https://placehold.co/400x300/ca8a04/0d243c?text=Deth" },
+            { id: 18, name: "Ram Baingan Pickle", nameHindi: "राम बैंगन अचार", category: "Pickles", prices: {'1kg': 300, '500g': 150}, image: "https://placehold.co/400x300/ca8a04/0d243c?text=Ram+Baingan" },
+            { id: 19, name: "Tind (Ker) Medium", nameHindi: "टिंड (केर) मीडियम", category: "Pickles", prices: {'1kg': 300, '500g': 150}, image: "https://placehold.co/400x300/ca8a04/0d243c?text=Tind+Medium" },
+            { id: 20, name: "Mango Pitless", nameHindi: "आम बिना गुठली अचार", category: "Pickles", prices: {'1kg': 300, '500g': 150}, image: "https://placehold.co/400x300/ca8a04/0d243c?text=Pitless+Mango" },
+            { id: 21, name: "Sweet Mango Pickle", nameHindi: "मीठा आम अचार", category: "Pickles", prices: {'1kg': 300, '500g': 150}, image: "https://placehold.co/400x300/ca8a04/0d243c?text=Sweet+Mango" },
+            { id: 22, name: "Red Chilli Pickle", nameHindi: "लाल मिर्च अचार", category: "Pickles", prices: {'1kg': 300, '500g': 150}, image: "redchilli.png" },
+            { id: 23, name: "Sweet Red Chilli", nameHindi: "मीठी लाल मिर्च", category: "Pickles", prices: {'1kg': 300, '500g': 150}, image: "https://placehold.co/400x300/ca8a04/0d243c?text=Sweet+Red+Chilli" },
+            { id: 24, name: "Lemon Sweet Pickle", nameHindi: "नींबू मीठा अचार", category: "Pickles", prices: {'1kg': 300, '500g': 150}, image: "https://placehold.co/400x300/ca8a04/0d243c?text=Lemon+Sweet" },
+            { id: 25, name: "Radish Pickle", nameHindi: "मूली अचार", category: "Pickles", prices: {'1kg': 300, '500g': 150}, image: "https://placehold.co/400x300/ca8a04/0d243c?text=Radish" },
+            { id: 26, name: "Garlic Pickle", nameHindi: "लहसुन अचार", category: "Pickles", prices: {'1kg': 300, '500g': 150}, image: "garlic.png" },
+            { id: 27, name: "Raw Turmeric Pickle", nameHindi: "कच्चा हल्दी अचार", category: "Pickles", prices: {'1kg': 300, '500g': 150}, image: "turmericp.png" },
+            { id: 28, name: "Amla Pickle", nameHindi: "आंवला अचार", category: "Pickles", prices: {'1kg': 300, '500g': 150}, image: "https://placehold.co/400x300/ca8a04/0d243c?text=Amla" },
+            { id: 29, name: "Papaya Pickle", nameHindi: "पपीता अचार", category: "Pickles", prices: {'1kg': 300, '500g': 150}, image: "https://placehold.co/400x300/ca8a04/0d243c?text=Papaya" },
+            { id: 30, name: "Banana Pickle", nameHindi: "केला अचार", category: "Pickles", prices: {'1kg': 300, '500g': 150}, image: "https://placehold.co/400x300/ca8a04/0d243c?text=Banana" },
+            { id: 31, name: "Pumpkin Pickle", nameHindi: "कद्दू अचार", category: "Pickles", prices: {'1kg': 300, '500g': 150}, image: "https://placehold.co/400x300/ca8a04/0d243c?text=Pumpkin" },
+            { id: 32, name: "Fenugreek Seed Pickle", nameHindi: "मेथी दाना अचार", category: "Pickles", prices: {'1kg': 300, '500g': 150}, image: "https://placehold.co/400x300/ca8a04/0d243c?text=Fenugreek" },
+            { id: 33, name: "Black Carrot Pickle", nameHindi: "काले गाजर अचार", category: "Pickles", prices: {'1kg': 300, '500g': 150}, image: "https://placehold.co/400x300/ca8a04/0d243c?text=Black+Carrot" },
+            { id: 34, name: "Rajma Pickle", nameHindi: "राजमा अचार", category: "Pickles", prices: {'1kg': 300, '500g': 150}, image: "https://placehold.co/400x300/ca8a04/0d243c?text=Rajma" },
+            { id: 35, name: "Drumstick Pod Pickle", nameHindi: "सहजन फली अचार", category: "Pickles", prices: {'1kg': 300, '500g': 150}, image: "drumstick.png" },
+            { id: 36, name: "Ginger Pickle", nameHindi: "अदरक अचार", category: "Pickles", prices: {'1kg': 300, '500g': 150}, image: "https://placehold.co/400x300/ca8a04/0d243c?text=Ginger" },
+            { id: 37, name: "Kohadtuka Pickle", nameHindi: "कोहड़तुका अचार", category: "Pickles", prices: {'1kg': 300, '500g': 150}, image: "https://placehold.co/400x300/ca8a04/0d243c?text=Kohadtuka" },
+            
+            // --- Chutneys (Item01) ---
+            { id: 38, name: "Fruit Chutney", nameHindi: "फ्रूट चटनी", category: "Chutneys", prices: {'1kg': 300, '500g': 150}, image: "https://placehold.co/400x300/ca8a04/0d243c?text=Fruit+Chutney" },
+            { id: 39, name: "Amla Chutney", nameHindi: "आंवला चटनी", category: "Chutneys", prices: {'1kg': 300, '500g': 150}, image: "amalache.png" },
+            { id: 40, name: "Mango Chutney", nameHindi: "आम की चटनी", category: "Chutneys", prices: {'1kg': 300, '500g': 150}, image: "https://placehold.co/400x300/ca8a04/0d243c?text=Mango+Chutney" },
+            { id: 41, name: "Lemon Sweet & Sour Chutney", nameHindi: "नींबू खट्टी मीठी चटनी", category: "Chutneys", prices: {'1kg': 300, '500g': 150}, image: "LemonPickle.png" },
+            { id: 42, name: "Green Mint Chutney", nameHindi: "हरी पुदीना चटनी", category: "Chutneys", prices: {'1kg': 300, '500g': 150}, image: "https://placehold.co/400x300/ca8a04/0d243c?text=Green+Mint" },
+            { id: 43, name: "Panchmel Chutney", nameHindi: "पंचमेल चटनी", category: "Chutneys", prices: {'1kg': 400, '500g': 200}, image: "https://placehold.co/400x300/ca8a04/0d243c?text=Panchmel" },
+
+            // --- Dried Goods (Item01) ---
+            { id: 44, name: "Sukhi Kachri", nameHindi: "सूखी कचरी", category: "Dried Goods", prices: {'500g': 500, '250g': 250}, image: "https://placehold.co/400x300/ca8a04/0d243c?text=Kachri" },
+            { id: 45, name: "Sukhi Gavar Phali", nameHindi: "सूखी गवार फली", category: "Dried Goods", prices: {'500g': 500, '250g': 250}, image: "https://placehold.co/400x300/ca8a04/0d243c?text=Gavar" },
+            { id: 46, name: "Sangri Sukhi", nameHindi: "सांगरी सूखी", category: "Dried Goods", prices: {'500g': 1000, '200g': 450}, image: "https://placehold.co/400x300/ca8a04/0d243c?text=Sangri" },
+            { id: 47, name: "Sukhi Khetri", nameHindi: "सूखी खेत्री", category: "Dried Goods", prices: {'500g': 300, '250g': 250}, image: "https://placehold.co/400x300/ca8a04/0d243c?text=Khetri" },
+
+            // --- Murabba (Item01) ---
+            { id: 48, name: "Amla Murabba (Honey)", nameHindi: "आंवला मुरब्बा (शहद)", category: "Murabba", prices: {'1kg': 300}, image: "amlahoney.jpg" },
+            { id: 49, name: "Amla Murabba (Khand)", nameHindi: "आंवला मुरब्बा (खांड)", category: "Murabba", prices: {'1kg': 200}, image: "amlaMurabba.png" },
+            { id: 50, name: "Apple Murabba", nameHindi: "सेब मुरब्बा", category: "Murabba", prices: {'1kg': 200}, image: "applemur.png" },
+            { id: 51, name: "Karonda Murabba", nameHindi: "करोंदा मुरब्बा", category: "Murabba", prices: {'1kg': 300}, image: "karhonda.png" },
+            { id: 52, name: "Harad Murabba", nameHindi: "हरड़ मुरब्बा", category: "Murabba", prices: {'1kg': 300}, image: "HaradMurabba.png" },
+            { id: 53, name: "Carrot Murabba", nameHindi: "गाजर मुरब्बा", category: "Murabba", prices: {'1kg': 200}, image: "https://placehold.co/400x300/ca8a04/0d243c?text=Carrot+Murabba" },
+            { id: 54, name: "Bamboo Murabba", nameHindi: "बांस मुरब्बा", category: "Murabba", prices: {'1kg': 300}, image: "bamboo.png" },
+            { id: 55, name: "Kaudtumba Murabba", nameHindi: "कौडतुंबा मुरब्बा", category: "Murabba", prices: {'1kg': 300}, image: "KaudtumbaMurabba (1).png" },
+            { id: 56, name: "Bel Patthar Murabba", nameHindi: "बेल पत्थर मुरब्बा", category: "Murabba", prices: {'1kg': 200}, image: "belpattar.png" },
+
+            // --- Juices & Kandies (Item01) ---
+            { id: 57, name: "Aloe Vera Juice", nameHindi: "एलोवेरा जूस", category: "Juices & Kandies", prices: {'1kg': 300, '500g': 150}, image: "alovera.jpg" },
+            { id: 58, name: "Amla Juice", nameHindi: "आंवला जूस", category: "Juices & Kandies", prices: {'1kg': 300, '500g': 150}, image: "amlajuice.jpg" },
+            { id: 59, name: "Amla Sweet Candy", nameHindi: "आंवला मीठी कैंडी", category: "Juices & Kandies", prices: {'1kg': 300, '500g': 150}, image: "amlacandy.jpg" },
+            { id: 60, name: "Amla Chatpata Candy", nameHindi: "आंवला खट्टी कैंडी", category: "Juices & Kandies", prices: {'1kg': 300, '500g': 150}, image: "https://placehold.co/400x300/ca8a04/0d243c?text=Salty+Candy" },
+            { id: 61, name: "Amla Laddu", nameHindi: "आंवला लड्डू (खांड)", category: "Juices & Kandies", prices: {'1kg': 300, '500g': 150}, image: "AmlaLaddu.jpg" },
+            { id: 62, name: "Anjeer Juice", nameHindi: "अंजीर जूस", category: "Juices & Kandies", prices: {'100g': 100}, image: "https://placehold.co/400x300/ca8a04/0d243c?text=Anjeer+Juice" },
+            { id: 63, name: "Aloe Vera Jelly", nameHindi: "एलोवेरा जैली", category: "Juices & Kandies", prices: {'1kg': 200, '500g': 100}, image: "AloeVeraJelly.jpg" },
+            { id: 64, name: "Amla Jelly", nameHindi: "आंवला जैली", category: "Juices & Kandies", prices: {'1kg': 200, '500g': 100}, image: "amlajelly.jpg" },
+            
+            // --- Oils & Powders (Item01) ---
+            { id: 65, name: "Red Chilli Powder", nameHindi: "देसी लाल मिर्च पाउडर", category: "Oils & Powders", prices: {'1kg': 600, '500g': 300}, image: "https://placehold.co/400x300/ca8a04/0d243c?text=Red+Chilli+Powder" },
+            { id: 66, name: "Longi Mirch Powder", nameHindi: "देसी लौंगी मिर्च पाउडर", category: "Oils & Powders", prices: {'1kg': 1200, '500g': 600}, image: "https://placehold.co/400x300/ca8a04/0d243c?text=Longi+Mirch" },
+            { id: 67, name: "Turmeric Powder", nameHindi: "मेघालय हल्दी पाउडर", category: "Oils & Powders", prices: {'1kg': 500, '500g': 250}, image: "https://placehold.co/400x300/ca8a04/0d243c?text=Turmeric+Powder" },
+            { id: 68, name: "Desi Honey", nameHindi: "देसी शहद", category: "Oils & Powders", prices: {'1kg': 600, '500g': 300}, image: "https://placehold.co/400x300/ca8a04/0d243c?text=Honey" },
+            { id: 69, name: "Coconut Oil", nameHindi: "नारियल तेल", category: "Oils & Powders", prices: {'1kg': 600, '500g': 300}, image: "https://placehold.co/400x300/ca8a04/0d243c?text=Coconut+Oil" },
+            { id: 70, name: "Til Oil", nameHindi: "तिल तेल", category: "Oils & Powders", prices: {'1kg': 600, '500g': 300}, image: "https://placehold.co/400x300/ca8a04/0d243c?text=Til+Oil" },
+            { id: 71, name: "Almond Oil", nameHindi: "बादाम तेल", category: "Oils & Powders", prices: {'1kg': 1200, '500g': 600}, image: "AlmondOil.jpg" },
+            { id: 72, name: "Peeli Sarson", nameHindi: "पीली सरसों", category: "Oils & Powders", prices: {'1kg': 400, '500g': 200}, image: "https://placehold.co/400x300/ca8a04/0d243c?text=Peeli+Sarson" },
+            { id: 73, name: "Mustard Oil", nameHindi: "सरसों तेल", category: "Oils & Powders", prices: {'1kg': 250, '500g': 130}, image: "https://placehold.co/400x300/ca8a04/0d243c?text=Mustard+Oil" },
+            { id: 74, name: "Flaxseed Oil", nameHindi: "अलसी तेल", category: "Oils & Powders", prices: {'1kg': 600, '500g': 300}, image: "https://placehold.co/400x300/ca8a04/0d243c?text=Flaxseed" },
+            { id: 75, name: "Desi Khand", nameHindi: "देसी खांड", category: "Oils & Powders", prices: {'1kg': 200, '500g': 150}, image: "https://placehold.co/400x300/ca8a04/0d243c?text=Khand" },
+            { id: 76, name: "Desi Gud", nameHindi: "देसी गुड़", category: "Oils & Powders", prices: {'1kg': 200, '500g': 150}, image: "https://placehold.co/400x300/ca8a04/0d243c?text=Gud" },
+            { id: 77, name: "Desi Shakkar", nameHindi: "देसी शक्कर", category: "Oils & Powders", prices: {'1kg': 200, '500g': 150}, image: "https://placehold.co/400x300/ca8a04/0d243c?text=Shakkar" },
+            { id: 78, name: "Castor Oil", nameHindi: "अरंडी तेल", category: "Oils & Powders", prices: {'1kg': 240, '500g': 120}, image: "https://placehold.co/400x300/ca8a04/0d243c?text=Castor+Oil" },
+            { id: 79, name: "Neem Oil", nameHindi: "नीम तेल", category: "Oils & Powders", prices: {'1kg': 240, '500g': 120}, image: "https://placehold.co/400x300/ca8a04/0d243c?text=Neem+Oil" },
+
+            // --- Natural Products (Item01) ---
+            { id: 80, name: "Handmade Soap", nameHindi: "नीम / एलोवेरा / मुल्तानी मिट्टी साबुन", category: "Natural Products", prices: {'1pc': 50, '2pcs': 100}, image: "https://placehold.co/400x300/ca8a04/0d243c?text=Soap" },
+            { id: 81, name: "Digestive Goli", nameHindi: "पुदीना / हींग / हरड़ गोली", category: "Natural Products", prices: {'100g': 100, '200g': 200}, image: "https://placehold.co/400x300/ca8a04/0d243c?text=Goli" },
+            { id: 82, name: "Masala Mix", nameHindi: "मोरिंगा पाउडर / चाय मसाला / रायता मसाला", category: "Natural Products", prices: {'100g': 100, '200g': 200}, image: "https://placehold.co/400x300/ca8a04/0d243c?text=Masala" },
+        ];
+
+        let cart = [];
+        let currentCategory = 'All'; 
+
+        // DOM Elements
+        const productGrid = document.getElementById('product-grid');
+        const categoryFilters = document.getElementById('category-filters');
+        
+        const cartModal = document.getElementById('cart-modal');
+        const cartModalContent = document.getElementById('cart-modal-content');
+        const closeCartModalBtn = document.getElementById('close-cart-modal-btn');
+        const cartBtn = document.getElementById('cart-btn');
+        const cartBtnMobile = document.getElementById('cart-btn-mobile');
+        const cartCount = document.getElementById('cart-count');
+        const cartCountMobile = document.getElementById('cart-count-mobile');
+        const cartItemsList = document.getElementById('cart-items-list');
+        const cartTotalPrice = document.getElementById('cart-total-price');
+        
+        const orderForm = document.getElementById('order-form');
+        const sendWhatsAppBtn = document.getElementById('send-whatsapp-btn');
+        const formErrorMsg = document.getElementById('form-error-msg');
+        
+        const customerName = document.getElementById('customer-name');
+        const customerAddress = document.getElementById('customer-address');
+        const customerWhatsapp = document.getElementById('customer-whatsapp');
+
+        const toast = document.getElementById('toast');
+
+        // New Menu & Search DOM Elements
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileMenuLinks = document.querySelectorAll('.mobile-menu-link');
+        const searchIcon = document.getElementById('search-icon');
+        const searchIconMobile = document.getElementById('search-icon-mobile');
+        const searchBarContainer = document.getElementById('search-bar-container');
+        const searchInput = document.getElementById('search-input');
+        const closeSearchBtn = document.getElementById('close-search-btn');
+
+
+        /**
+         * Renders products based on category AND search query
+         */
+        function renderProducts() {
+            productGrid.innerHTML = ''; // Clear existing grid
+            
+            const searchQuery = searchInput.value.toLowerCase();
+
+            // 1. Filter by category
+            let filteredProducts = (currentCategory === 'All')
+                ? products
+                : products.filter(p => p.category === currentCategory);
+
+            // 2. Filter by search query
+            if (searchQuery) {
+                filteredProducts = filteredProducts.filter(p => 
+                    p.name.toLowerCase().includes(searchQuery) || (p.nameHindi && p.nameHindi.includes(searchQuery))
+                );
+            }
+            
+            if (filteredProducts.length === 0) {
+                productGrid.innerHTML = '<p class="text-center text-gray-400 col-span-full">No products found. Try adjusting your filters or search.</p>';
+                return;
+            }
+
+            filteredProducts.forEach(product => {
+                const card = document.createElement('div');
+                card.className = 'bg-gray-800 rounded-lg shadow-md overflow-hidden relative animate-card'; // Added 'animate-card'
+                
+                const weights = Object.keys(product.prices);
+                const defaultWeight = weights[0];
+                const defaultPrice = product.prices[defaultWeight];
+                
+                const weightOptions = weights.map(weight => 
+                    `<option value="${weight}" data-price="${product.prices[weight]}">${weight}</option>`
+                ).join('');
+                
+                const productImg = product.image; 
+                
+                card.innerHTML = `
+                    <img src="${productImg}" alt="${product.name}" class="w-full h-48 object-cover" onerror="this.src='https://placehold.co/400x300/ca8a04/0d243c?text=${encodeURIComponent(product.name)}'; this.onerror=null;">
+                    <div class="p-4 flex flex-col flex-grow">
+                        <h3 class="text-xl font-bold text-brand-secondary mb-2">${product.name}</h3>
+                        <p class="text-sm text-gray-400 mb-2 h-10 overflow-hidden">${product.nameHindi || ''}</p>
+                        
+                        <div class="flex justify-between items-center mb-4 gap-2">
+                            <select id="weight-select-${product.id}" class="block w-1/2 bg-gray-700 text-white border-gray-600 rounded-lg shadow-sm p-2 text-sm focus:border-brand-secondary focus:ring-brand-secondary">
+                                ${weightOptions}
+                            </select>
+                            <span id="price-display-${product.id}" class="text-xl font-bold text-brand-secondary">
+                                Rs. ${defaultPrice}
+                            </span>
+                        </div>
+                        
+                        <button class="add-to-cart-btn w-full font-bold py-2 px-4 rounded-lg mt-auto" data-product-id="${product.id}">
+                            Add to Cart
+                        </button>
+                    </div>
+                `;
+                
+                productGrid.appendChild(card);
+                
+                const weightSelect = card.querySelector(`#weight-select-${product.id}`);
+                const priceDisplay = card.querySelector(`#price-display-${product.id}`);
+                const addToCartButton = card.querySelector('.add-to-cart-btn');
+                
+                weightSelect.addEventListener('change', () => {
+                    const selectedOption = weightSelect.options[weightSelect.selectedIndex];
+                    const newPrice = selectedOption.getAttribute('data-price');
+                    priceDisplay.textContent = `Rs. ${newPrice}`;
+                });
+                
+                // Add to Cart button logic
+                addToCartButton.addEventListener('click', () => {
+                    const selectedWeight = weightSelect.value;
+                    const currentPrice = weightSelect.options[weightSelect.selectedIndex].getAttribute('data-price');
+                    addToCart(product, selectedWeight, parseFloat(currentPrice));
+                });
+            });
+        }
+
+        /**
+         * Adds an item to the global cart array
+         */
+        function addToCart(product, weight, price) {
+            cart.push({
+                id: product.id,
+                name: product.name,
+                weight: weight,
+                price: price
+            });
+            updateCartCount();
+            showToast("Item added to cart!");
+        }
+
+        /**
+         * Updates the cart count bubble in the header
+         */
+        function updateCartCount() {
+            cartCount.textContent = cart.length;
+            cartCountMobile.textContent = cart.length;
+        }
+
+        /**
+         * Shows a toast notification
+         */
+        function showToast(message) {
+            toast.textContent = message;
+            toast.classList.remove('hidden', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('opacity-0');
+                setTimeout(() => {
+                    toast.classList.add('hidden');
+                }, 300);
+            }, 2000); // Show for 2 seconds
+        }
+
+        /**
+         * Renders the items in the cart modal
+         */
+        function renderCartItems() {
+            cartItemsList.innerHTML = ''; // Clear list
+            let total = 0;
+
+            if (cart.length === 0) {
+                cartItemsList.innerHTML = '<p class="text-gray-400">Your cart is empty.</p>';
+                cartTotalPrice.innerHTML = '';
+            } else {
+                cart.forEach((item, index) => {
+                    const itemEl = document.createElement('div');
+                    itemEl.className = 'flex justify-between items-center bg-gray-700 p-3 rounded-lg border border-gray-600';
+                    itemEl.innerHTML = `
+                        <div>
+                            <p class="font-semibold text-white">${item.name}</p>
+                            <p class="text-sm text-gray-400">${item.weight} - Rs. ${item.price.toFixed(2)}</p>
+                        </div>
+                        <button class="remove-cart-item text-red-400 hover:text-red-300 font-bold" data-index="${index}">&times; Remove</button>
+                    `;
+                    cartItemsList.appendChild(itemEl);
+                    total += item.price;
+                });
+                cartTotalPrice.innerHTML = `<h4 class="text-xl font-bold text-brand-secondary text-right">Total: Rs. ${total.toFixed(2)}</h4>`;
+            }
+            updateCartCount();
+        }
+
+        /**
+         * Opens and populates the cart modal
+         */
+        function openCartModal() {
+            renderCartItems(); // Populate cart items
+            
+            // Reset form error
+            formErrorMsg.classList.add('hidden');
+            
+            // Show modal with animation
+            cartModal.classList.remove('hidden');
+            setTimeout(() => {
+                cartModal.classList.remove('opacity-0');
+                cartModalContent.classList.remove('scale-95', 'opacity-0');
+                cartModalContent.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        /**
+         * Closes the cart modal
+         */
+        function closeCartModal() {
+            cartModalContent.classList.remove('scale-100', 'opacity-100');
+            cartModalContent.classList.add('scale-95', 'opacity-0');
+            cartModal.classList.add('opacity-0');
+            setTimeout(() => {
+                cartModal.classList.add('hidden');
+            }, 300);
+        }
+
+        // --- Render Filters ---
+        function renderFilters() {
+            const categories = ['All', ...new Set(products.map(p => p.category))];
+            const container = document.getElementById('category-filters');
+            container.innerHTML = categories.map(cat => 
+                `<button onclick="setCategory('${cat}')" class="filter-btn px-4 py-2 rounded-full border ${currentCategory === cat ? 'bg-brand-secondary text-white' : 'bg-gray-700 text-gray-200 border-gray-600'}">${cat}</button>`
+            ).join('');
+        }
+
+        window.setCategory = (cat) => {
+            currentCategory = cat;
+            renderProducts();
+            renderFilters();
+        };
+
+
+        /**
+         * Handles the WhatsApp submission
+         */
+        sendWhatsAppBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            const name = customerName.value.trim();
+            const address = customerAddress.value.trim();
+            const whatsappNum = customerWhatsapp.value.trim();
+            
+            // Validation
+            if (!name || !address || !whatsappNum || cart.length === 0) {
+                formErrorMsg.classList.remove('hidden');
+                return;
+            }
+            formErrorMsg.classList.add('hidden');
+
+            // Build cart items string
+            let messageItems = "";
+            let total = 0;
+            cart.forEach(item => {
+                messageItems += `- ${item.name} (${item.weight}): Rs. ${item.price.toFixed(2)}\n`;
+                total += item.price;
+            });
+
+            // Format the final message
+            const message = `*New Order from Moon Grow Website*
+---------------------------------
+Name: ${name}
+Address: ${address}
+WhatsApp No: ${whatsappNum}
+---------------------------------
+*Order Details:*
+${messageItems}
+---------------------------------
+*Total Price: Rs. ${total.toFixed(2)}*
+---------------------------------
+Please confirm this order.`;
+
+            const businessNumber = "919467554441";
+            const whatsappUrl = `https://wa.me/${businessNumber}?text=${encodeURIComponent(message)}`;
+            
+            window.open(whatsappUrl, '_blank');
+            
+            // Clear cart and close modal
+            cart = [];
+            renderCartItems(); // This will also update count and total
+            closeCartModal();
+            // Clear form fields
+            customerName.value = '';
+            customerAddress.value = '';
+            customerWhatsapp.value = '';
+        });
+
+        // Cart Modal open/close listeners
+        cartBtn.addEventListener('click', openCartModal);
+        cartBtnMobile.addEventListener('click', openCartModal);
+        closeCartModalBtn.addEventListener('click', closeCartModal);
+        cartModal.addEventListener('click', (e) => {
+            if (e.target === cartModal) {
+                closeCartModal();
+            }
+        });
+
+        // Remove item from cart listener
+        cartItemsList.addEventListener('click', (e) => {
+            if (e.target.classList.contains('remove-cart-item')) {
+                const index = e.target.getAttribute('data-index');
+                cart.splice(index, 1); // Remove item from array
+                renderCartItems(); // Re-render cart list
+            }
+        });
+
+        // --- New Mobile Menu & Search Listeners ---
+
+        // Toggle mobile menu
+        menuBtn.addEventListener('click', () => {
+            menuBtn.classList.toggle('open');
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when a link is clicked
+        mobileMenuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                menuBtn.classList.remove('open');
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Toggle search bar
+        function toggleSearchBar() {
+            searchBarContainer.classList.toggle('hidden');
+            if (!searchBarContainer.classList.contains('hidden')) {
+                searchInput.focus(); // Auto-focus the input
+            } else {
+                searchInput.value = ''; // Clear search on close
+                renderProducts(); // Re-render to show all products
+            }
+        }
+        searchIcon.addEventListener('click', toggleSearchBar);
+        searchIconMobile.addEventListener('click', toggleSearchBar);
+        closeSearchBtn.addEventListener('click', toggleSearchBar);
+
+        // Filter products on search input
+        searchInput.addEventListener('input', () => {
+            renderProducts(); // Re-render products with the search query
+        });
+
+        // --- End of New Listeners ---
+
+        // Set current year in footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // Initial render on page load
+        window.addEventListener('load', () => {
+            renderProducts(); // Initial render
+            renderFilters();
+        });
+
+    </script>
+</body>
+</html>
